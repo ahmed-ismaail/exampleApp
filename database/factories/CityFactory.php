@@ -23,7 +23,7 @@ class CityFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'govrn_id' => 1
+            'government_id' => $this->faker->unique()->numberBetween($min = 1, $max = 10)
         ];
     }
 

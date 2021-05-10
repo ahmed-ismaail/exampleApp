@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Govrn extends Model
+class Government extends Model
 {
     use HasFactory;
 
@@ -21,5 +21,5 @@ class Govrn extends Model
     public function cities()
     {
         return $this->hasMany(City::class);
-    }
+    }    
 }

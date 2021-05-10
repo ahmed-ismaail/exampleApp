@@ -15,6 +15,12 @@ class Area extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
-    ];    
+        'name',
+        'city_id'
+    ];  
+    
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }

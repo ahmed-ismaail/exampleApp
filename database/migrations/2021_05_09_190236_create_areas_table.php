@@ -17,7 +17,7 @@ class CreateAreasTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->timestamps();
-            $table->foreignId('city_id')->constrained();
+            $table->foreignId('city_id')->constrained('cities');
         });
     }
 

@@ -15,11 +15,17 @@ class City extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'government_id'
     ];
 
     public function areas()
     {
         return $this->hasMany(Area::class);
+    }
+
+    public function government()
+    {
+        return $this->belongsTo(Government::class);
     }
 }

@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Govrn;
+use App\Models\Government;
 
-class GovrnSeeder extends Seeder
+class GovernmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class GovrnSeeder extends Seeder
      */
     public function run()
     {
-        Govrn::factory()
+        Government::factory()
         ->count(10)
         ->create();   
     }

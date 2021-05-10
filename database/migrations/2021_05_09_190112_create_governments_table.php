@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGovrnsTable extends Migration
+class CreateGovernmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateGovrnsTable extends Migration
      */
     public function up()
     {
-        Schema::create('govrns', function (Blueprint $table) {
+        Schema::create('governments', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateGovrnsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('govrns');
+        Schema::dropIfExists('governments');
     }
 }

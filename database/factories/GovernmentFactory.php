@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Govrn;
+use App\Models\Government;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GovrnFactory extends Factory
+class GovernmentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Govrn::class;
+    protected $model = Government::class;
 
     /**
      * Define the model's default state.
