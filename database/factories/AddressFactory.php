@@ -26,7 +26,8 @@ class AddressFactory extends Factory
             'building_no' => $this->faker->numberBetween($min = 1, $max = 10),
             'floor_no' => $this->faker->numberBetween($min = 1, $max = 10),
             'flat_no' => $this->faker->numberBetween($min = 1, $max = 10),
-            'user_id' => $this->faker->numberBetween($min = 1, $max = 10)
+            'user_id' => $this->faker->numberBetween($min = 1, $max = 10),
+            'area_id' => $this->faker->numberBetween($min = 1, $max = 10)
         ];
     }
 }
