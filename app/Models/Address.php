@@ -11,9 +11,9 @@ class Address extends Model
 
     protected $fillable = [
         'street',
-        'buildingNo',
-        'floorNo',
-        'flatNo',
+        'building_no',
+        'floor_no',
+        'flat_no',
         'user_id'
     ];
 

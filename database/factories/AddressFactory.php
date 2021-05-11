@@ -23,9 +23,9 @@ class AddressFactory extends Factory
     {
         return [
             'street' => $this->faker->regexify('[A-Za-z0-9]{20}'),
-            'buildingNo' => $this->faker->numberBetween($min = 1, $max = 10),
-            'floorNo' => $this->faker->numberBetween($min = 1, $max = 10),
-            'flatNo' => $this->faker->numberBetween($min = 1, $max = 10),
+            'building_no' => $this->faker->numberBetween($min = 1, $max = 10),
+            'floor_no' => $this->faker->numberBetween($min = 1, $max = 10),
+            'flat_no' => $this->faker->numberBetween($min = 1, $max = 10),
             'user_id' => $this->faker->numberBetween($min = 1, $max = 10)
         ];
     }
