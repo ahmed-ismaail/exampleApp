@@ -20,5 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::post('addresses', 'AddressController@createAddress');
 Route::post('addresses', [AddressController::class,'createAddress']);
