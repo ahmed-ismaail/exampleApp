@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Address;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
@@ -46,6 +47,27 @@ class AddressController extends Controller
             return response()->json([
                 "message" => $e->getMessage()
             ], 400);
+        }
+    }
+
+    public function retrieveUserAddresses(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'required|exists:users,id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    "message" => "Bad request, No Addresses for this user."
+                ], 400);
+            } else {
+                $userAddresses = DB::table('addresses')->orderByDesc('created_at')
+                    ->where('user_id', $request->user_id)->get();
+                return response()->json($userAddresses, 200);
+            }
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
         }
     }
 }

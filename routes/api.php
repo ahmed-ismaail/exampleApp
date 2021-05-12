@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('addresses', [AddressController::class,'createAddress']);
+
+Route::get('getUseraddresses', [AddressController::class,'retrieveUserAddresses']);
