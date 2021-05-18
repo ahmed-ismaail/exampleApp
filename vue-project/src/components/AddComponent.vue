@@ -1,53 +1,64 @@
 <template>
   <form id="form">
-    <CustomLabel labelText="newlabel" class="label" v-on:add-todo="addItem"/>
-    <CustomButton btnValue="Add" class="addButton"/>
+    <CustomLabel labelText="newlabel" class="label" />
+    <CustomInput
+      placeHolderText="Enter government name..."
+      class="textInput"
+      v-on:get-input="parentmethod"
+    />
+    <CustomButton btnValue="Add" class="addButton" @methodAdd="addItem" />
   </form>
 </template>
 
 <script>
 import CustomLabel from "./CustomLabel.vue";
-// import CustomInput from "./CustomInput.vue";
+import CustomInput from "./CustomInput.vue";
 import CustomButton from "./CustomButton.vue";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   name: "AddComponent",
   components: {
     CustomLabel,
     CustomButton,
-    // CustomInput
+    CustomInput,
   },
-  methods: {
-
-
-    // addItem() {
-    //   axios
-    //     .post("http://localhost:8000/api/addGovernment", {
-    //       // name: "Cairo", 
-    //       name:CustomInput.data.governmentName         
-    //     })
-    //     .then((response) => {
-    //       console.log(response.data);
-    //     })
-    //     .catch((e) => {
-    //        console.log(e);
-    //     });
-    // },
+  data() {
+    return {
+      namgovernmentName: "",
+    };
   },
+  methods: {  
+    parentmethod(value) {
+      console.log(value);
+      return value;
+    },
+    addItem() {
+      console.log("testing this");
+      axios
+        .post("http://localhost:8000/api/addGovernment", {
+          name: this.parentmethod.arguments,
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  }
 };
 </script>
 
 <style>
-
- form{
+form {
   display: flex;
 }
 
-.addButton{
+.addButton {
   flex: 10;
 }
-.label{
+.label {
   flex: 2;
 }
 </style>

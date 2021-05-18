@@ -12,19 +12,16 @@ class AddressController extends Controller
 {
     public function createAddress(Request $request)
     {
-
         try {
             $validator = Validator::make($request->all(), [
-                'id' => 'required',
                 'street' => 'nullable',
                 'building_no' => 'nullable',
                 'floor_no' => 'nullable',
                 'flat_no' => 'nullable',
                 'user_id' => 'required|exists:users,id',
                 'area_id' => 'nullable|exists:areas,id',
-
             ]);
-
+            
             if ($validator->fails()) {
                 return response()->json([
                     "message" => "bad request"
@@ -44,6 +41,7 @@ class AddressController extends Controller
                 ], 201);
             }
         } catch (Exception $e) {
+            dd($e);
             return response()->json([
                 "message" => $e->getMessage()
             ], 400);
