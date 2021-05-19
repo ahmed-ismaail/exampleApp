@@ -25,19 +25,17 @@ export default {
   },
   data() {
     return {
-      namgovernmentName: "",
+      governmentName: "",
     };
   },
   methods: {  
     parentmethod(value) {
-      console.log(value);
-      return value;
+      this.governmentName = value;
     },
     addItem() {
-      console.log("testing this");
       axios
         .post("http://localhost:8000/api/addGovernment", {
-          name: this.parentmethod.arguments,
+          name: this.governmentName,
         })
         .then((response) => {
           console.log(response.data);
