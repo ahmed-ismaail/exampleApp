@@ -1,9 +1,8 @@
 <template>
   <form id="form">
-    <CustomLabel labelText="newlabel" class="label" />
+    <CustomLabel labelText="government" class="label" />
     <CustomInput
       placeHolderText="Enter government name..."
-      class="textInput"
       v-on:get-input="parentmethod"
     />
     <CustomButton btnValue="Add" class="addButton" @methodAdd="addItem" />
@@ -28,13 +27,15 @@ export default {
       governmentName: "",
     };
   },
-  methods: {  
+  methods: {
     parentmethod(value) {
       this.governmentName = value;
     },
     addItem() {
+      console.log("test env "+process.env.VUE_APP_ADD_GOVERNMENT_URL);
       axios
-        .post("http://localhost:8000/api/addGovernment", {
+         .post("http://localhost:80/api/addGovernment", {
+        //.post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
           name: this.governmentName,
         })
         .then((response) => {
@@ -44,19 +45,9 @@ export default {
           console.log(e);
         });
     },
-  }
+  },
 };
 </script>
 
-<style>
-form {
-  display: flex;
-}
-
-.addButton {
-  flex: 10;
-}
-.label {
-  flex: 2;
-}
+<style scoped src="../assets/css/add-component.css">
 </style>

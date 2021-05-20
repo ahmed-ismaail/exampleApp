@@ -20,13 +20,6 @@ export default {
 };
 </script>
 
-<style>
-#div {
-  display: flex;
-}
-
-.addButton {
-  flex: 2;
-}
+<style scoped src="../assets/css/custom-button-component.css">
 </style>
 

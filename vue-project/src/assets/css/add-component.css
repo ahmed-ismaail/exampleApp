@@ -1,0 +1,7 @@
+form {
+    display: flex;
+}
+
+.label {
+    margin: 5px 10px;
+}
