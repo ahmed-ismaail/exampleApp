@@ -32,10 +32,8 @@ export default {
       this.governmentName = value;
     },
     addItem() {
-      console.log("test env "+process.env.VUE_APP_ADD_GOVERNMENT_URL);
       axios
-         .post("http://localhost:80/api/addGovernment", {
-        //.post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
+         .post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
           name: this.governmentName,
         })
         .then((response) => {
