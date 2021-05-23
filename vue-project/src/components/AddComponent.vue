@@ -41,12 +41,10 @@ export default {
     },
     addItem() {
       this.isLoading = true;
-      this.succeeded = false;
-      this.failed = false;
+      this.removeMessage();
       this.buttonDisabled = true;
       this.inputDisabled = true;
       if (this.governmentName != "") {
-        // console.log(this.)
         axios
           .post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
             name: this.governmentName,

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <label v-if="labelText != null">{{labelText}}</label>
+  <div v-if="labelText != null">
+    <label >{{labelText}}</label>
   </div>
 </template>
 

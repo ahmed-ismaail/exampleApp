@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: "SuccessComponent", 
+  name: "FailComponent", 
 };
 </script>
 
