@@ -19,7 +19,6 @@ class GovernmentController extends Controller
             ]);
             
             if ($validator->fails()) {
-                dd("fails");
                 return response()->json([
                     "message" => "bad request"
                 ], 400);
@@ -33,7 +32,6 @@ class GovernmentController extends Controller
                 ], 201);
             }
         } catch (Exception $e) {
-            dd($e);
             return response()->json([
                 "message" => $e->getMessage()
             ], 400);

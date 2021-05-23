@@ -1,47 +1,81 @@
 <template>
   <form id="form">
-    <CustomLabel labelText="government" class="label" />
-    <CustomInput
+    <custom-label labelText="government" class="label" />
+    <custom-input
       placeHolderText="Enter government name..."
-      v-on:get-input="parentmethod"
+      v-on:get-input="getGovernmentName"
+      ref="input"
+      @writing="removeMessage"
+      :isDisabled="inputDisabled"
     />
-    <CustomButton btnValue="Add" class="addButton" @methodAdd="addItem" />
+    <custom-button
+      btnValue="Add"
+      class="addButton"
+      @methodAdd="addItem"
+      :isButtonDisabled="buttonDisabled"
+    />
+    <loading-component v-if="isLoading"> </loading-component>
+    <success-component v-if="succeeded"> </success-component>
+    <fail-component v-if="failed"> </fail-component>
   </form>
 </template>
 
 <script>
-import CustomLabel from "./CustomLabel.vue";
-import CustomInput from "./CustomInput.vue";
-import CustomButton from "./CustomButton.vue";
 import axios from "axios";
 
 export default {
   name: "AddComponent",
-  components: {
-    CustomLabel,
-    CustomButton,
-    CustomInput,
-  },
   data() {
     return {
       governmentName: "",
+      isLoading: false,
+      succeeded: false,
+      failed: false,
+      inputDisabled: false,
+      buttonDisabled: false,
     };
   },
   methods: {
-    parentmethod(value) {
+    getGovernmentName(value) {
       this.governmentName = value;
     },
     addItem() {
-      axios
-         .post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
-          name: this.governmentName,
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      this.isLoading = true;
+      this.succeeded = false;
+      this.failed = false;
+      this.buttonDisabled = true;
+      this.inputDisabled = true;
+      if (this.governmentName != "") {
+        // console.log(this.)
+        axios
+          .post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
+            name: this.governmentName,
+          })
+          .then(() => {
+            this.isLoading = false;
+            this.succeeded = true;
+            this.governmentName = "";
+            this.$refs.input.governmentName = "";
+            this.enableform();
+          })
+          .catch(() => {
+            this.isLoading = false;
+            this.failed = true;
+            this.enableform();
+          });
+      } else {
+        this.isLoading = false;
+        this.failed = true;
+        this.enableform();
+      }
+    },
+    enableform() {
+      this.buttonDisabled = false;
+      this.inputDisabled = false;
+    },
+    removeMessage() {
+      this.failed = false;
+      this.succeeded = false;
     },
   },
 };

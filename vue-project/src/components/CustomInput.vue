@@ -5,6 +5,8 @@
       :placeholder="placeHolderText"
       v-model="governmentName"
       @keyup="passInput"
+      @keydown="lestenInput"
+      :disabled="isDisabled"
     />
   </div>
 </template>
@@ -15,6 +17,7 @@ export default {
   props: {
     placeHolderText: String,
     method: { type: Function },
+    isDisabled: Boolean,
   },
   data() {
     return {
@@ -25,6 +28,9 @@ export default {
     passInput() {
       this.$emit("get-input", this.governmentName);
     },
+    lestenInput(){
+      this.$emit("writing");
+    }
   },
 };
 </script>

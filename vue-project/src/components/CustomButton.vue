@@ -1,20 +1,24 @@
  <template>
   <div id="div">
-    <input type="button" :value="btnValue" @click.prevent="addItem" />
+    <input
+      type="button"
+      :value="btnValue"
+      @click.prevent="addItem"
+      :disabled="isButtonDisabled"
+    />
   </div>
 </template>
 
 <script>
-
 export default {
   name: "CustomButton",
   props: {
     btnValue: String,
-    method: Function,
+    isButtonDisabled: Boolean,
   },
   methods: {
     addItem() {
-      this.$emit('methodAdd');
+      this.$emit("methodAdd");
     },
   },
 };
