@@ -26,3 +26,5 @@ Route::post('addresses', [AddressController::class, 'createAddress']);
 Route::get('getUseraddresses', [AddressController::class, 'retrieveUserAddresses']);
 
 Route::post('addGovernment',[GovernmentController::class, "addGovernment"]);
+
+Route::get('getGovernmentsCount', [GovernmentController::class, 'retrieveGovernments']);

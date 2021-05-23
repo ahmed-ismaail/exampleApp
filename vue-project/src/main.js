@@ -7,6 +7,7 @@ import AddComponent from "./components/AddComponent.vue"
 import LoadingComponent from "./components/LoadingComponent.vue"
 import SuccessComponent from "./components/SuccessComponent.vue"
 import FailComponent from "./components/FailComponent.vue"
+import GovernmentsCountComponent from "./components/GovernmentsCountComponent.vue"
 
 const app = createApp(App)
 
@@ -17,5 +18,6 @@ app.component('add-component', AddComponent)
 app.component('loading-component', LoadingComponent)
 app.component('success-component', SuccessComponent)
 app.component('fail-component', FailComponent)
+app.component('governments-count-component', GovernmentsCountComponent)
 
 app.mount('#app')
