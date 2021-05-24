@@ -2,6 +2,7 @@
   <div id="app">
     <add-component @updateCount="changeUpdateState" />
     <governments-count-component :callUpdateCount="update" />
+    <governments-list-component :callUpdateList="update" @updateCountAfterDelete="changeUpdateState" />
   </div>
 </template>
 
@@ -15,7 +16,10 @@ export default {
   },
   methods: {
     changeUpdateState() {
-      return this.update = !this.update;
+      return (this.update = !this.update);
+    },
+    print() {
+      console.log("testing emit");
     },
   },
 };

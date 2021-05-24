@@ -45,4 +45,34 @@ class GovernmentController extends Controller
             return response()->json($e->getMessage(), $e->getCode());
         }
     }
+
+    public function retrieveGovernmentsList()
+    {
+        try {
+            $governmentsList = Government::get();
+            return response()->json($governmentsList, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function deleteGovernment(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:governments,id'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    "message" => "Bad request, No government with this id"
+                ], 400);
+            } else {
+                Government::destroy($request->id);
+                return response()->json("government deleted successfully", 200);
+            }
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
 }
