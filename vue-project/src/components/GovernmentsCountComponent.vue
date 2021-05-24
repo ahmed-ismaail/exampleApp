@@ -2,7 +2,7 @@
   <div>
     <label> Total count of governments: {{ governmentCount }} </label>
   </div>
-</template>
+</template> 
 
 <script>
 import axios from "axios";
@@ -14,6 +14,7 @@ export default {
       governmentCount: 0,
     };
   },
+  props: ["callUpdateCount"],
   methods: {
     retrieveGovernmentsCount() {
       axios
@@ -24,6 +25,11 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+  },
+  watch: {
+    callUpdateCount() {
+      this.retrieveGovernmentsCount();
     },
   },
   mounted: function () {

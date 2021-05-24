@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <add-component @updateCount="update" />
-    <governments-count-component ref="count"/>
+    <add-component @updateCount="update = !update" />
+    <governments-count-component :callUpdateCount="update" />
   </div>
 </template>
 
@@ -9,9 +9,9 @@
 
 export default {
   name: "App", 
-  methods:{
-    update(){
-      this.$refs.count.retrieveGovernmentsCount();
+  data(){
+    return{
+      update:false
     }
   }
 };
