@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <add-component />
-    <div >
-      <governments-count-component :governmentCount="governments" />
-    </div>
+    <add-component @updateCount="retrieveGovernmentsCount" />
+    <governments-count-component :governmentCount="governments" />
   </div>
 </template>
 

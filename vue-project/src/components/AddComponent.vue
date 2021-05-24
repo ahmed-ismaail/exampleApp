@@ -55,7 +55,7 @@ export default {
             this.governmentName = "";
             this.$refs.input.governmentName = "";
             this.enableform();
-            // this.updateGovernmentsCount();
+            this.updateGovernmentsCount();
           })
           .catch(() => {
             this.isLoading = false;
@@ -76,9 +76,9 @@ export default {
       this.failed = false;
       this.succeeded = false;
     },
-    // updateGovernmentsCount(){
-    //   this.$emit("updateCount");
-    // }
+    updateGovernmentsCount(){
+      this.$emit("updateCount");
+    }
   },
 };
 </script>
