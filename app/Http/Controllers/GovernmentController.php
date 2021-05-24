@@ -6,8 +6,7 @@ use App\Models\Government;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Exception;
-
-
+use Illuminate\Support\Facades\DB;
 
 class GovernmentController extends Controller
 {
@@ -15,16 +14,16 @@ class GovernmentController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'nullable'                
+                'name' => 'nullable'
             ]);
-            
+
             if ($validator->fails()) {
                 return response()->json([
                     "message" => "bad request"
                 ], 400);
             } else {
                 $government = new Government();
-                $government->name = $request->name;               
+                $government->name = $request->name;
                 $government->save();
 
                 return response()->json([
@@ -35,6 +34,15 @@ class GovernmentController extends Controller
             return response()->json([
                 "message" => $e->getMessage()
             ], 500);
+        }
+    }
+    public function retrieveGovernments()
+    {
+        try {
+            $governmentsCount = Government::count();
+            return response()->json($governmentsCount, 200);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
         }
     }
 }

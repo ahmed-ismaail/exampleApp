@@ -5,7 +5,7 @@
       :placeholder="placeHolderText"
       v-model="governmentName"
       @keyup="passInput"
-      @keydown="lestenInput"
+      @keydown="listenInput"
       :disabled="isDisabled"
     />
   </div>
@@ -28,7 +28,7 @@ export default {
     passInput() {
       this.$emit("get-input", this.governmentName);
     },
-    lestenInput(){
+    listenInput(){
       this.$emit("writing");
     }
   },
