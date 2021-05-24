@@ -37,8 +37,7 @@ export default {
   methods: {
     retrieveGovernmentsList() {
       axios
-        // .get(process.env.VUE_APP_RETRIEVE_GOVERNMENTS_LIST_URL)
-        .get("http://localhost:80/api/getGovernmentsList")
+        .get(process.env.VUE_APP_RETRIEVE_GOVERNMENTS_LIST_URL)
         .then((list) => {
           this.governmentList = list.data;
         })
@@ -51,8 +50,7 @@ export default {
     },
     deleteGovernment() {
       axios
-        .post("http://localhost:80/api/deleteGovernment", {
-          //.post(process.env.VUE_APP_DELETE_GOVERNMENT_URL, {
+        .post(process.env.VUE_APP_DELETE_GOVERNMENT_URL, {
           id: this.governmentId,
         })
         .then((response) => {
