@@ -14,7 +14,12 @@ export default {
       governmentCount: 0,
     };
   },
-  props: ["callUpdateCount"],
+  props: {
+    callUpdateCount: {
+      type: Boolean,
+      default: false,
+    },
+  },
   methods: {
     retrieveGovernmentsCount() {
       axios
