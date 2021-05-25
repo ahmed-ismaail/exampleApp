@@ -68,8 +68,13 @@ class GovernmentController extends Controller
                     "message" => "Bad request, No government with this id"
                 ], 400);
             } else {
-                Government::destroy($request->id);
-                return response()->json("government deleted successfully", 200);
+                $government = Government::find($request->id);
+                if ($government->cities()->count() > 0) {
+                    return response()->json("government can't be deleted, because it has a relation with a city", 400);
+                } else {
+                    $government->delete();
+                    return response()->json("government deleted successfully", 200);
+                }
             }
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
