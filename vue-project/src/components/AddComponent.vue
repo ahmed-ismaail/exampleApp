@@ -62,7 +62,7 @@ export default {
             this.succeeded = true;
             this.successMessage = response.data.message;
             this.governmentName = "";
-            this.$refs.input.governmentName = "";
+            this.$refs.input.inputText = "";
             this.enableform();
             this.updateGovernmentsCount();
           })

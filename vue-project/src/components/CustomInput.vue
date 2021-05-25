@@ -3,7 +3,7 @@
     <input
       type="text"
       :placeholder="placeHolderText"
-      v-model="governmentName"
+      v-model="inputText"
       @keyup="passInput"
       @keydown="listenInput"
       :disabled="isDisabled"
@@ -21,12 +21,12 @@ export default {
   },
   data() {
     return {
-      governmentName: "",
+      inputText: "",
     };
   },
   methods: {
     passInput() {
-      this.$emit("get-input", this.governmentName);
+      this.$emit("get-input", this.inputText);
     },
     listenInput(){
       this.$emit("writing");
