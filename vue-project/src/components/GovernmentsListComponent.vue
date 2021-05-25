@@ -11,8 +11,13 @@
           {{ governemnt.name }}
         </option>
       </select>
+      <input
+        :hidden="isHidden"
+        type="button"
+        value="Delete"
+        @click="deleteGovernment"
+      />
     </div>
-    <input type="button" value="Delete" @click="deleteGovernment" />
   </div>
 </template> 
 
@@ -32,6 +37,7 @@ export default {
       governmentList: [],
       key: "",
       governmentId: "",
+      isHidden: true,
     };
   },
   methods: {
@@ -47,6 +53,7 @@ export default {
     },
     getGovernmentId() {
       this.governmentId = this.key;
+      this.isHidden = false;
     },
     deleteGovernment() {
       axios

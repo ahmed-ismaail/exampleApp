@@ -13,14 +13,11 @@ export default {
     return {
       update: false,
     };
-  },
+  }, 
   methods: {
     changeUpdateState() {
       return (this.update = !this.update);
-    },
-    print() {
-      console.log("testing emit");
-    },
+    }
   },
 };
 </script>
