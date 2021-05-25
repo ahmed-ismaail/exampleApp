@@ -28,3 +28,7 @@ Route::get('getUseraddresses', [AddressController::class, 'retrieveUserAddresses
 Route::post('addGovernment',[GovernmentController::class, "addGovernment"]);
 
 Route::get('getGovernmentsCount', [GovernmentController::class, 'retrieveGovernments']);
+
+Route::get('getGovernmentsList', [GovernmentController::class, 'retrieveGovernmentsList']);
+
+Route::post('deleteGovernment', [GovernmentController::class, 'deleteGovernment']);
