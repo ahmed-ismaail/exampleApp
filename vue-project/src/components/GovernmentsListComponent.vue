@@ -72,22 +72,26 @@ export default {
     },
     deleteGovernment() {
       this.removeAlerts();
-      axios
-        .post(process.env.VUE_APP_DELETE_GOVERNMENT_URL, {
-          id: this.governmentId,
-        })
-        .then((response) => {
-          this.succeeded = true;
-          this.successMessage = response.data.message;
-          this.$emit("updateCountAfterDelete");
-          this.retrieveGovernmentsList();
-          console.log(response);
-        })
-        .catch((e) => {
-          this.failed = true;
-          this.errorMessage = e.response.data.message;
-          console.log(e.response.data);
-        });
+      if (this.governmentId != null) {
+        axios
+          .post(process.env.VUE_APP_DELETE_GOVERNMENT_URL, {
+            id: this.governmentId,
+          })
+          .then((response) => {
+            this.succeeded = true;
+            this.successMessage = response.data.message;
+            this.governmentId = null;
+            this.$emit("updateCountAfterDelete");
+            this.retrieveGovernmentsList();
+          })
+          .catch((e) => {
+            this.failed = true;
+            this.errorMessage = e.response.data.message;
+          });
+      }else{
+        this.failed = true;
+        this.errorMessage = "you have to select a government"
+      }
     },
     removeAlerts() {
       this.failed = false;

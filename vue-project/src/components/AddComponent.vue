@@ -88,7 +88,6 @@ export default {
       this.succeeded = false;
     },
     hideListAlertsEmit() {
-      console.log("testin this this this");
       this.$emit("hideListAlerts");
     },
     updateGovernmentsCount() {
