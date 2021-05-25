@@ -17,7 +17,7 @@ class CreateCitiesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->timestamps();
-            $table->foreignId('government_id')->constrained('governments')->onDelete('cascade');
+            $table->foreignId('government_id')->constrained('governments');
         });
     }
 
