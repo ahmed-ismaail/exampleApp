@@ -1,6 +1,6 @@
  <template>
   <div id="fail-div">
-    <label >Couldn't add government</label>
+    <label >{{content}}</label>
   </div>
 </template>
 
@@ -8,6 +8,12 @@
 
 export default {
   name: "FailComponent", 
+  props:{
+    content:{
+      type:String,
+      default:""
+    }
+  }
 };
 </script>
 

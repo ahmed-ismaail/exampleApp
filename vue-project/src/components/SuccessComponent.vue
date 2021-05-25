@@ -1,13 +1,18 @@
  <template>
   <div id="success-div">
-    <label >Government added successfully</label>
+    <label>{{content}}</label>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: "SuccessComponent", 
+  name: "SuccessComponent",
+  props: {
+    content: {
+      type: String,
+      default: "",
+    },
+  },
 };
 </script>
 

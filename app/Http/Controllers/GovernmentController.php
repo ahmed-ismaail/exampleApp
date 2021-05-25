@@ -70,10 +70,14 @@ class GovernmentController extends Controller
             } else {
                 $government = Government::find($request->id);
                 if ($government->cities()->count() > 0) {
-                    return response()->json("government can't be deleted, because it has a relation with a city", 400);
+                    return response()->json([
+                        "message" => "government can't be deleted, because it has a relation with a city"
+                    ], 400);
                 } else {
                     $government->delete();
-                    return response()->json("government deleted successfully", 200);
+                    return response()->json([
+                        "message" => "government deleted successfully"
+                    ], 200);
                 }
             }
         } catch (Exception $e) {
