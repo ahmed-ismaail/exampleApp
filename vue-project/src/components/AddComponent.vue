@@ -3,6 +3,7 @@
     <custom-label labelText="government" class="label" />
     <custom-input
       placeHolderText="Enter government name..."
+      inputType="text"
       v-on:get-input="getGovernmentName"
       ref="input"
       @writing="removeMessage(); hideListAlertsEmit();"
@@ -62,7 +63,7 @@ export default {
             this.succeeded = true;
             this.successMessage = response.data.message;
             this.governmentName = "";
-            this.$refs.input.governmentName = "";
+            this.$refs.input.inputText = "";
             this.enableform();
             this.updateGovernmentsCount();
           })

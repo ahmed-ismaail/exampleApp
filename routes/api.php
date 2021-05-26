@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Address;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\GovernmentController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ use App\Http\Controllers\GovernmentController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('addUser', [UserController::class, 'createUser']);
 
 Route::post('addresses', [AddressController::class, 'createAddress']);
 
