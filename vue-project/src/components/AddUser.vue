@@ -43,6 +43,7 @@
 
 <script>
 import axios from "axios";
+import helper from "../helperClass.js"
 
 export default {
   name: "AddUser",
@@ -67,8 +68,8 @@ export default {
       passwordErrorMessage: "",
       submitErrorMessage: "",
       submitSuccessMessage: "",
-      emailRegex: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-      usernameRegex: /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9])[a-zA-Z0-9]*$/,
+      emailRegex: helper.emailRegex,
+      usernameRegex: helper.usernameRegex
     };
   },
   methods: {
