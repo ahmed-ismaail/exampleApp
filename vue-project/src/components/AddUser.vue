@@ -67,14 +67,12 @@ export default {
       emailErrorMessage: "",
       passwordErrorMessage: "",
       submitErrorMessage: "",
-      submitSuccessMessage: "",
-      emailRegex: helper.emailRegex,
-      usernameRegex: helper.usernameRegex
+      submitSuccessMessage: ""
     };
   },
   methods: {
-    addUser() {
-      this.removeAlerts();
+    addUser() {   
+      this.removeAlerts(); 
       if (this.username === "") {
         this.failedUsername = true;
         this.usernameErrorMessage = "you must enter a username";
@@ -84,10 +82,10 @@ export default {
       } else if (this.password === "") {
         this.failedPassword = true;
         this.passwordErrorMessage = "you must enter a password";
-      } else if (this.email !== "" && !this.validateEmail()) {
+      } else if (this.email !== "" && !helper.validateEmail(this.email)) {
         this.failedEmail = true;
         this.emailErrorMessage = "Please enter a valid email";
-      } else if (this.username !== "" && !this.validateUsername()) {
+      } else if (this.username !== "" && !helper.validateUsername(this.username)) {
         this.failedUsername = true;
         this.usernameErrorMessage = "Please enter a valid username";
       } else {
@@ -115,13 +113,7 @@ export default {
     },
     getPassword(value) {
       this.password = value;
-    },
-    validateEmail() {
-      return this.emailRegex.test(this.email);
-    },
-    validateUsername() {
-      return this.usernameRegex.test(this.username);
-    },
+    },   
     removeAlerts() {
       this.failedSubmit = false;
       this.succeededSubmit = false;
