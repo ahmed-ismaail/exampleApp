@@ -67,6 +67,8 @@ export default {
       passwordErrorMessage: "",
       submitErrorMessage: "",
       submitSuccessMessage: "",
+      emailRegex: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+      usernameRegex: /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9])[a-zA-Z0-9]*$/,
     };
   },
   methods: {
@@ -81,6 +83,12 @@ export default {
       } else if (this.password === "") {
         this.failedPassword = true;
         this.passwordErrorMessage = "you must enter a password";
+      } else if (this.email !== "" && !this.validateEmail()) {
+        this.failedEmail = true;
+        this.emailErrorMessage = "Please enter a valid email";
+      } else if (this.username !== "" && !this.validateUsername()) {
+        this.failedUsername = true;
+        this.usernameErrorMessage = "Please enter a valid username";
       } else {
         axios
           .post(process.env.VUE_APP_ADD_USER_URL, {
@@ -91,12 +99,10 @@ export default {
           .then((response) => {
             this.succeededSubmit = true;
             this.submitSuccessMessage = response.data.message;
-            console.log(response.data.message);
           })
           .catch((e) => {
-              this.failedSubmit = true;
-              this.submitErrorMessage = e.response.data.message;
-              console.log(e.response.data);
+            this.failedSubmit = true;
+            this.submitErrorMessage = e.response.data.message;
           });
       }
     },
@@ -108,6 +114,12 @@ export default {
     },
     getPassword(value) {
       this.password = value;
+    },
+    validateEmail() {
+      return this.emailRegex.test(this.email);
+    },
+    validateUsername() {
+      return this.usernameRegex.test(this.username);
     },
     removeAlerts() {
       this.failedSubmit = false;

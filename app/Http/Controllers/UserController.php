@@ -14,8 +14,15 @@ class UserController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required|email',
+                'name' => [
+                    'required',
+                    'regex:/^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9])[a-zA-Z0-9]*$/'
+                ],
+                'email' => [
+                    'required',
+                    'email',
+                     'regex:/^[a-zA-Z0-9.!#$%&\'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'
+                ],
                 'password' => [
                     'required',
                     'string',
