@@ -3,6 +3,7 @@
     <custom-label labelText="government" class="label" />
     <custom-input
       placeHolderText="Enter government name..."
+      inputType="text"
       v-on:get-input="getGovernmentName"
       ref="input"
       @writing="removeMessage(); hideListAlertsEmit();"

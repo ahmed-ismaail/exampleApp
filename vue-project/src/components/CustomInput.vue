@@ -1,7 +1,7 @@
  <template>
   <div>
     <input
-      type="text"
+      :type="inputType"
       :placeholder="placeHolderText"
       v-model="inputText"
       @keyup="passInput"
@@ -16,21 +16,21 @@ export default {
   name: "CustomInput",
   props: {
     placeHolderText: String,
-    method: { type: Function },
     isDisabled: Boolean,
+    inputType: String,
   },
   data() {
     return {
       inputText: "",
     };
-  },
+  }, 
   methods: {
     passInput() {
       this.$emit("get-input", this.inputText);
     },
-    listenInput(){
+    listenInput() {
       this.$emit("writing");
-    }
+    },
   },
 };
 </script>
