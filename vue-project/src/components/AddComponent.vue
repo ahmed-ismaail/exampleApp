@@ -6,7 +6,10 @@
       inputType="text"
       v-on:get-input="getGovernmentName"
       ref="input"
-      @writing="removeMessage(); hideListAlertsEmit();"
+      @writing="
+        removeAlerts();
+        hideListAlertsEmit();
+      "
       :isDisabled="inputDisabled"
     />
     <custom-button
@@ -23,9 +26,12 @@
 
 <script>
 import axios from "axios";
+import store from "./../Store";
+import { mapState } from "vuex";
 
 export default {
   name: "AddComponent",
+  store,
   props: {
     callHideAlerts: {
       type: Boolean,
@@ -35,13 +41,6 @@ export default {
   data() {
     return {
       governmentName: "",
-      isLoading: false,
-      succeeded: false,
-      failed: false,
-      inputDisabled: false,
-      buttonDisabled: false,
-      errorMessage: "",
-      successMessage: "",
     };
   },
   methods: {
@@ -49,44 +48,43 @@ export default {
       this.governmentName = value;
     },
     addItem() {
-      this.isLoading = true;
-      this.removeMessage();
-      this.buttonDisabled = true;
-      this.inputDisabled = true;
+      store.commit("isLoading");
+      store.commit("clearAlerts");
+      store.commit("disableButton");
+      store.commit("disableInput");
       if (this.governmentName != "") {
         axios
           .post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
             name: this.governmentName,
           })
           .then((response) => {
-            this.isLoading = false;
-            this.succeeded = true;
-            this.successMessage = response.data.message;
+            !store.commit("isLoading");
+            store.commit("isSucceeded");
+            store.commit("showSuccess",response.data.message);
             this.governmentName = "";
             this.$refs.input.inputText = "";
             this.enableform();
             this.updateGovernmentsCount();
           })
           .catch((e) => {
-            this.isLoading = false;
-            this.failed = true;
-            this.errorMessage = e.response.data;
+            !store.commit("isLoading");
+            store.commit("isFailed");
+            store.commit("showError", e.response.data);
             this.enableform();
           });
       } else {
-        this.isLoading = false;
-        this.failed = true;
-        this.errorMessage = "Can't leave input empty";
+        !store.commit("isLoading");
+        store.commit("isFailed");
+        store.commit("showError", "Can't leave input empty");
         this.enableform();
       }
     },
     enableform() {
-      this.buttonDisabled = false;
-      this.inputDisabled = false;
+      !store.commit("disableButton");
+      !store.commit("disableInput");
     },
-    removeMessage() {
-      this.failed = false;
-      this.succeeded = false;
+    removeAlerts() {
+      store.commit("clearAlerts");
     },
     hideListAlertsEmit() {
       this.$emit("hideListAlerts");
@@ -97,8 +95,19 @@ export default {
   },
   watch: {
     callHideAlerts() {
-      this.removeMessage();
+      this.removeAlerts();
     },
+  },
+  computed: {
+    ...mapState([
+      "succeeded",
+      "inputDisabled",
+      "buttonDisabled",
+      "failed",
+      "succeeded",
+      "errorMessage",
+      "successMessage",
+    ]),
   },
 };
 </script>
