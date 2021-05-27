@@ -6,6 +6,7 @@
       @get-input="getUsername"
       inputType="text"
       @writing="removeAlerts"
+      :clearInput="inputsEmpty"
     />
     <div id="divMessage">
       <fail-component v-if="failedUsername" :content="usernameErrorMessage" />
@@ -16,6 +17,7 @@
       @get-input="getEmail"
       inputType="email"
       @writing="removeAlerts"
+      :clearInput="inputsEmpty"
     />
     <div id="divMessage">
       <fail-component v-if="failedEmail" :content="emailErrorMessage" />
@@ -26,6 +28,7 @@
       @get-input="getPassword"
       inputType="password"
       @writing="removeAlerts"
+      :clearInput="inputsEmpty"
     />
     <div id="divMessage">
       <fail-component v-if="failedPassword" :content="passwordErrorMessage" />
@@ -43,7 +46,7 @@
 
 <script>
 import axios from "axios";
-import helper from "../helperClass.js"
+import helper from "../helperClass.js";
 
 export default {
   name: "AddUser",
@@ -67,12 +70,13 @@ export default {
       emailErrorMessage: "",
       passwordErrorMessage: "",
       submitErrorMessage: "",
-      submitSuccessMessage: ""
+      submitSuccessMessage: "",
+      inputsEmpty: false,
     };
   },
   methods: {
-    addUser() {   
-      this.removeAlerts(); 
+    addUser() {
+      this.removeAlerts();
       if (this.username === "") {
         this.failedUsername = true;
         this.usernameErrorMessage = "you must enter a username";
@@ -85,7 +89,10 @@ export default {
       } else if (this.email !== "" && !helper.validateEmail(this.email)) {
         this.failedEmail = true;
         this.emailErrorMessage = "Please enter a valid email";
-      } else if (this.username !== "" && !helper.validateUsername(this.username)) {
+      } else if (
+        this.username !== "" &&
+        !helper.validateUsername(this.username)
+      ) {
         this.failedUsername = true;
         this.usernameErrorMessage = "Please enter a valid username";
       } else {
@@ -96,6 +103,7 @@ export default {
             password: this.password,
           })
           .then((response) => {
+            this.clearInputs();
             this.succeededSubmit = true;
             this.submitSuccessMessage = response.data.message;
           })
@@ -113,13 +121,19 @@ export default {
     },
     getPassword(value) {
       this.password = value;
-    },   
+    },
     removeAlerts() {
       this.failedSubmit = false;
       this.succeededSubmit = false;
       this.failedUsername = false;
       this.failedEmail = false;
       this.failedPassword = false;
+    },
+    clearInputs() {
+      this.inputsEmpty = !this.inputsEmpty;
+      this.username = "";
+      this.email = "";
+      this.password = "";
     },
   },
 };

@@ -18,18 +18,24 @@ export default {
     placeHolderText: String,
     isDisabled: Boolean,
     inputType: String,
+    clearInput: Boolean
   },
   data() {
     return {
       inputText: "",
     };
-  }, 
+  },
   methods: {
     passInput() {
       this.$emit("get-input", this.inputText);
     },
     listenInput() {
       this.$emit("writing");
+    },
+  },
+  watch: {
+    clearInput() {
+      this.inputText = "";
     },
   },
 };
