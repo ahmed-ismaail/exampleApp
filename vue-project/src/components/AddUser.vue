@@ -9,7 +9,7 @@
       :clearInput="inputsEmpty"
     />
     <div id="divMessage">
-      <fail-component v-if="failedUsername" :content="usernameErrorMessage" />
+      <fail-component v-if="failedUsername" :content="errorMessage" />
     </div>
     <custom-label labelText="Email" class="label" />
     <custom-input
@@ -20,7 +20,7 @@
       :clearInput="inputsEmpty"
     />
     <div id="divMessage">
-      <fail-component v-if="failedEmail" :content="emailErrorMessage" />
+      <fail-component v-if="failedEmail" :content="errorMessage" />
     </div>
     <custom-label labelText="Password" class="label" />
     <custom-input
@@ -31,15 +31,12 @@
       :clearInput="inputsEmpty"
     />
     <div id="divMessage">
-      <fail-component v-if="failedPassword" :content="passwordErrorMessage" />
+      <fail-component v-if="failedPassword" :content="errorMessage" />
     </div>
     <custom-button btnValue="Add" class="addButton" @click="addUser" />
     <div id="divMessage">
-      <fail-component v-if="failedSubmit" :content="submitErrorMessage" />
-      <success-component
-        v-if="succeededSubmit"
-        :content="submitSuccessMessage"
-      />
+      <fail-component v-if="failed" :content="errorMessage" />
+      <success-component v-if="succeeded" :content="successMessage" />
     </div>
   </form>
 </template>
@@ -47,6 +44,8 @@
 <script>
 import axios from "axios";
 import helper from "../helperClass.js";
+import store from "./../Store.js";
+import { mapState } from "vuex";
 
 export default {
   name: "AddUser",
@@ -56,45 +55,27 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      username: "",
-      email: "",
-      password: "",
-      failedUsername: false,
-      failedEmail: false,
-      failedPassword: false,
-      failedSubmit: false,
-      succeededSubmit: false,
-      usernameErrorMessage: "",
-      emailErrorMessage: "",
-      passwordErrorMessage: "",
-      submitErrorMessage: "",
-      submitSuccessMessage: "",
-      inputsEmpty: false,
-    };
-  },
   methods: {
     addUser() {
       this.removeAlerts();
       if (this.username === "") {
-        this.failedUsername = true;
-        this.usernameErrorMessage = "you must enter a username";
+        store.commit("isFailedUsername");
+        store.commit("showError", "you must enter a username");
       } else if (this.email === "") {
-        this.failedEmail = true;
-        this.emailErrorMessage = "you must enter a email";
+        store.commit("isFailedEmail");
+        store.commit("showError", "you must enter a email");
       } else if (this.password === "") {
-        this.failedPassword = true;
-        this.passwordErrorMessage = "you must enter a password";
+        store.commit("isFailedPassword");
+        store.commit("showError", "you must enter a password");
       } else if (this.email !== "" && !helper.validateEmail(this.email)) {
-        this.failedEmail = true;
-        this.emailErrorMessage = "Please enter a valid email";
+        store.commit("isFailedEmail");
+        store.commit("showError", "Please enter a valid email");
       } else if (
         this.username !== "" &&
         !helper.validateUsername(this.username)
       ) {
-        this.failedUsername = true;
-        this.usernameErrorMessage = "Please enter a valid username";
+        store.commit("isFailedUsername");
+        store.commit("showError", "Please enter a valid username");
       } else {
         axios
           .post(process.env.VUE_APP_ADD_USER_URL, {
@@ -104,37 +85,46 @@ export default {
           })
           .then((response) => {
             this.clearInputs();
-            this.succeededSubmit = true;
-            this.submitSuccessMessage = response.data.message;
+            store.commit("isSucceeded");
+            store.commit("showSuccess", response.data.message);
           })
           .catch((e) => {
-            this.failedSubmit = true;
-            this.submitErrorMessage = e.response.data.message;
+            store.commit("isFailed");
+            store.commit("showError", e.response.data.message);
           });
       }
     },
     getUsername(value) {
-      this.username = value;
+      store.commit("setUsername", value);
     },
     getEmail(value) {
-      this.email = value;
+      store.commit("setEmail", value);
     },
     getPassword(value) {
-      this.password = value;
+      store.commit("setPassword", value);
     },
     removeAlerts() {
-      this.failedSubmit = false;
-      this.succeededSubmit = false;
-      this.failedUsername = false;
-      this.failedEmail = false;
-      this.failedPassword = false;
+      store.commit("removeAddUserAlerts");
     },
     clearInputs() {
-      this.inputsEmpty = !this.inputsEmpty;
-      this.username = "";
-      this.email = "";
-      this.password = "";
+      store.commit("isAddUserInputsEmpty");
+      store.commit("clearAddUserInputs");
     },
+  },
+  computed: {
+    ...mapState([
+      "failedUsername",
+      "failedEmail",
+      "failedPassword",
+      "succeeded",
+      "failed",
+      "successMessage",
+      "errorMessage",
+      "inputsEmpty",
+      "username",
+      "email",
+      "password",
+    ]),
   },
 };
 </script>

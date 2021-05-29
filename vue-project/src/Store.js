@@ -11,6 +11,16 @@ const store = createStore({
         buttonDisabled: false,
         errorMessage: "",
         successMessage: "",
+        failedUsername: false,
+        failedEmail: false,
+        failedPassword: false,
+        // usernameErrorMessage: "",
+        // emailErrorMessage: "",
+        // passwordErrorMessage: "",
+        inputsEmpty: false,
+        username: "",
+        email: "",
+        password: "",
     },
     mutations: {
         disableButton(state) {
@@ -33,11 +43,53 @@ const store = createStore({
             state.succeeded = false;
         },
         showError(state, payload) {
-            return state.errorMessage = payload;
+            state.errorMessage = payload;
         },
         showSuccess(state, payload) {
-            return state.successMessage = payload;
-        }
+            state.successMessage = payload;
+        },
+        isFailedUsername(state) {
+            state.failedUsername = true;
+        },
+        isFailedEmail(state) {
+            state.failedEmail = true;
+        },
+        isFailedPassword(state) {
+            state.failedPassword = true;
+        },
+        showUsernameErrorMessage(state, payload) {
+            state.usernameErrorMessage = payload;
+        },
+        showEmailErrorMessage(state, payload) {
+            state.emailErrorMessage = payload;
+        },
+        showPasswordErrorMessage(state, payload) {
+            state.passwordErrorMessage = payload;
+        },
+        setUsername(state, value) {
+            state.username = value;
+        },
+        setEmail(state, value) {
+            state.email = value;
+        },
+        setPassword(state, value) {
+            state.password = value;
+        },
+        isAddUserInputsEmpty(state) {
+            state.inputsEmpty = true;
+        },
+        clearAddUserInputs(state) {
+            state.username = "";
+            state.email = "";
+            state.password = "";
+        },
+        removeAddUserAlerts(state) {
+            state.failedUsername = false;
+            state.failedEmail = false;
+            state.failedPassword = false;
+            state.failed = false;
+            state.succeeded = false;
+        },
     },
 })
 
