@@ -3,7 +3,7 @@
     <custom-label labelText="Username" class="label" />
     <custom-input
       placeHolderText="Enter username..."
-      @get-input="getUsername"
+      @get-input="setUsername"
       inputType="text"
       @writing="removeAlerts"
       :clearInput="inputsEmpty"
@@ -14,7 +14,7 @@
     <custom-label labelText="Email" class="label" />
     <custom-input
       placeHolderText="Enter email..."
-      @get-input="getEmail"
+      @get-input="setEmail"
       inputType="email"
       @writing="removeAlerts"
       :clearInput="inputsEmpty"
@@ -25,7 +25,7 @@
     <custom-label labelText="Password" class="label" />
     <custom-input
       placeHolderText="Enter password..."
-      @get-input="getPassword"
+      @get-input="setPassword"
       inputType="password"
       @writing="removeAlerts"
       :clearInput="inputsEmpty"
@@ -35,80 +35,33 @@
     </div>
     <custom-button btnValue="Add" class="addButton" @click="addUser" />
     <div id="divMessage">
-      <fail-component v-if="failed" :content="errorMessage" />
-      <success-component v-if="succeeded" :content="successMessage" />
+      <fail-component v-if="failedAddUser" :content="errorMessage" />
+      <success-component v-if="succeededAddUser" :content="successMessage" />
     </div>
   </form>
 </template>
 
 <script>
-import axios from "axios";
-import helper from "../helperClass.js";
 import store from "./../Store.js";
 import { mapState } from "vuex";
 
 export default {
   name: "AddUser",
-  props: {
-    callHideAlerts: {
-      type: Boolean,
-      default: false,
-    },
-  },
   methods: {
     addUser() {
-      this.removeAlerts();
-      if (this.username === "") {
-        store.commit("isFailedUsername");
-        store.commit("showError", "you must enter a username");
-      } else if (this.email === "") {
-        store.commit("isFailedEmail");
-        store.commit("showError", "you must enter a email");
-      } else if (this.password === "") {
-        store.commit("isFailedPassword");
-        store.commit("showError", "you must enter a password");
-      } else if (this.email !== "" && !helper.validateEmail(this.email)) {
-        store.commit("isFailedEmail");
-        store.commit("showError", "Please enter a valid email");
-      } else if (
-        this.username !== "" &&
-        !helper.validateUsername(this.username)
-      ) {
-        store.commit("isFailedUsername");
-        store.commit("showError", "Please enter a valid username");
-      } else {
-        axios
-          .post(process.env.VUE_APP_ADD_USER_URL, {
-            name: this.username,
-            email: this.email,
-            password: this.password,
-          })
-          .then((response) => {
-            this.clearInputs();
-            store.commit("isSucceeded");
-            store.commit("showSuccess", response.data.message);
-          })
-          .catch((e) => {
-            store.commit("isFailed");
-            store.commit("showError", e.response.data.message);
-          });
-      }
+      store.dispatch("addUser");
     },
-    getUsername(value) {
+    setUsername(value) {
       store.commit("setUsername", value);
     },
-    getEmail(value) {
+    setEmail(value) {
       store.commit("setEmail", value);
     },
-    getPassword(value) {
+    setPassword(value) {
       store.commit("setPassword", value);
     },
     removeAlerts() {
       store.commit("removeAddUserAlerts");
-    },
-    clearInputs() {
-      store.commit("isAddUserInputsEmpty");
-      store.commit("clearAddUserInputs");
     },
   },
   computed: {
@@ -116,8 +69,8 @@ export default {
       "failedUsername",
       "failedEmail",
       "failedPassword",
-      "succeeded",
-      "failed",
+      "succeededAddUser",
+      "failedAddUser",
       "successMessage",
       "errorMessage",
       "inputsEmpty",

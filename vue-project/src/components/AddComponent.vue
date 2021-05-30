@@ -4,18 +4,15 @@
     <custom-input
       placeHolderText="Enter government name..."
       inputType="text"
-      v-on:get-input="getGovernmentName"
-      ref="input"
-      @writing="
-        removeAlerts();
-        hideListAlertsEmit();
-      "
+      v-on:get-input="setGovernmentName"
+      :clearInput="inputsEmpty"
+      @writing="removeAlerts()"
       :isDisabled="inputDisabled"
     />
     <custom-button
       btnValue="Add"
       class="addButton"
-      @methodAdd="addItem"
+      @methodAdd="addGovernment"
       :isButtonDisabled="buttonDisabled"
     />
     <loading-component v-if="isLoading" />
@@ -25,81 +22,26 @@
 </template>
 
 <script>
-import axios from "axios";
 import store from "./../Store";
 import { mapState } from "vuex";
 
 export default {
   name: "AddComponent",
-  store,
-  props: {
-    callHideAlerts: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      governmentName: "",
-    };
-  },
   methods: {
-    getGovernmentName(value) {
-      this.governmentName = value;
+    setGovernmentName(value) {
+      store.commit("setGovernmentName", value);
     },
-    addItem() {
-      store.commit("isLoading");
-      store.commit("clearAlerts");
-      store.commit("disableButton");
-      store.commit("disableInput");
-      if (this.governmentName != "") {
-        axios
-          .post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
-            name: this.governmentName,
-          })
-          .then((response) => {
-            !store.commit("isLoading");
-            store.commit("isSucceeded");
-            store.commit("showSuccess",response.data.message);
-            this.governmentName = "";
-            this.$refs.input.inputText = "";
-            this.enableform();
-            this.updateGovernmentsCount();
-          })
-          .catch((e) => {
-            !store.commit("isLoading");
-            store.commit("isFailed");
-            store.commit("showError", e.response.data);
-            this.enableform();
-          });
-      } else {
-        !store.commit("isLoading");
-        store.commit("isFailed");
-        store.commit("showError", "Can't leave input empty");
-        this.enableform();
-      }
-    },
-    enableform() {
-      !store.commit("disableButton");
-      !store.commit("disableInput");
+    addGovernment() {
+      store.dispatch("addGovernment");
     },
     removeAlerts() {
+      store.commit("removeDeleteAlerts");
       store.commit("clearAlerts");
-    },
-    hideListAlertsEmit() {
-      this.$emit("hideListAlerts");
-    },
-    updateGovernmentsCount() {
-      this.$emit("updateCount");
-    },
-  },
-  watch: {
-    callHideAlerts() {
-      this.removeAlerts();
     },
   },
   computed: {
     ...mapState([
+      "governmentName",
       "succeeded",
       "inputDisabled",
       "buttonDisabled",
@@ -107,6 +49,7 @@ export default {
       "succeeded",
       "errorMessage",
       "successMessage",
+      "inputsEmpty",
     ]),
   },
 };
