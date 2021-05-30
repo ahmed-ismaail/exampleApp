@@ -5,26 +5,15 @@
 </template> 
 
 <script>
-import store from "./../Store.js";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "GovernmentsCountComponent",
-  props: {
-    callUpdateCount: {
-      type: Boolean,
-      default: false,
+  methods: {
+    getCount() {
+      this.retrieveGovernmentsCount();
     },
-  },
-  methods:{
-    getCount(){
-      store.dispatch("retrieveGovernmentsCount");
-    }
-  },
-  watch: {
-    callUpdateCount() {
-      this.getCount();
-    },
+    ...mapActions(["retrieveGovernmentsCount"]),
   },
   mounted: function () {
     this.getCount();

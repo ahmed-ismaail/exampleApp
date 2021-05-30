@@ -22,22 +22,23 @@
 </template>
 
 <script>
-import store from "./../Store";
-import { mapState } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "AddComponent",
   methods: {
     setGovernmentName(value) {
-      store.commit("setGovernmentName", value);
+      this.setGovernmentName(value);
     },
     addGovernment() {
-      store.dispatch("addGovernment");
+      this.addGovernment();
     },
     removeAlerts() {
-      store.commit("removeDeleteAlerts");
-      store.commit("clearAlerts");
+      this.removeDeleteAlerts();
+      this.clearAlerts();
     },
+    ...mapActions(["addGovernment"]),
+    ...mapMutations(["setGovernmentName", "removeDeleteAlerts", "clearAlerts"]),
   },
   computed: {
     ...mapState([

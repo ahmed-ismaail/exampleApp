@@ -69,13 +69,13 @@ const store = createStore({
             state.switchToUser = !state.switchToUser;
         },
         disableButton(state) {
-            return state.buttonDisabled = !state.buttonDisabled;
+            state.buttonDisabled = !state.buttonDisabled;
         },
         disableInput(state) {
-            return state.inputDisabled = !state.inputDisabled;
+            state.inputDisabled = !state.inputDisabled;
         },
         isLoading(state) {
-            return state.isLoading = true;
+            state.isLoading = true;
         },
         isFailed(state) {
             state.failed = true;

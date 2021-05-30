@@ -42,27 +42,33 @@
 </template>
 
 <script>
-import store from "./../Store.js";
-import { mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "AddUser",
   methods: {
     addUser() {
-      store.dispatch("addUser");
+      this.addUser();
     },
     setUsername(value) {
-      store.commit("setUsername", value);
+      this.setUsername(value);
     },
     setEmail(value) {
-      store.commit("setEmail", value);
+      this.setEmail(value);
     },
     setPassword(value) {
-      store.commit("setPassword", value);
+      this.setPassword(value);
     },
     removeAlerts() {
-      store.commit("removeAddUserAlerts");
+      this.removeAddUserAlerts();
     },
+    ...mapActions(["addUser"]),
+    ...mapMutations([
+      "removeAddUserAlerts",
+      "setPassword",
+      "setEmail",
+      "setUsername",
+    ]),
   },
   computed: {
     ...mapState([

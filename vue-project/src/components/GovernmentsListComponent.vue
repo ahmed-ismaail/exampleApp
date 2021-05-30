@@ -26,27 +26,33 @@
 </template> 
 
 <script>
-import { mapState } from "vuex";
-import store from "./../Store.js";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "GovernmentsListComponent",
   methods: {
     retrieveGovernmentsList() {
-      store.dispatch("retrieveGovernmentsList");
+      this.retrieveGovernmentsList();
     },
     onSelectChange(e) {
-      store.commit("setGovernmentId", e.target.value);
-      store.commit("setHidden");
+      this.setGovernmentId(e.target.value);
+      this.setHidden();
       this.removeAlerts();
     },
     deleteGovernment() {
-      store.dispatch("deleteGovernment");
+      this.deleteGovernment();
     },
     removeAlerts() {
-      store.commit("clearAlerts");
-      store.commit("removeDeleteAlerts");
+      this.clearAlerts();
+      this.removeDeleteAlerts();
     },
+    ...mapMutations([
+      "setGovernmentId",
+      "setHidden",
+      "clearAlerts",
+      "removeDeleteAlerts",
+    ]),
+    ...mapActions(["retrieveGovernmentsList", "deleteGovernment"]),
   },
   mounted: function () {
     this.retrieveGovernmentsList();
