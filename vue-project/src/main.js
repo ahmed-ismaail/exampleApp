@@ -10,7 +10,7 @@ import FailComponent from "./components/FailComponent.vue"
 import GovernmentsCountComponent from "./components/GovernmentsCountComponent.vue"
 import GovernmentsListComponent from "./components/GovernmentsListComponent.vue"
 import AddUser from "./components/AddUser.vue"
-import store from "./Store"
+import store from "./store/index.js"
 
 const app = createApp(App)
 

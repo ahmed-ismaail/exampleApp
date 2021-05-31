@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import 'es6-promise/auto'
 import axios from "axios"
-import helper from "./helperClass.js"
+import helper from "../helperClass.js"
 
 const store = createStore({
     state: {

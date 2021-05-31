@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import store from "./Store.js";
+import store from "./store/index.js";
 import { mapState } from "vuex";
 
 export default {
