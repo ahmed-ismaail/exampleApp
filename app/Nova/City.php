@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -33,7 +34,7 @@ class City extends Resource
         'id',
     ];
 
-    public static $with = ['government'];
+    public static $with = ['government','areas'];
 
     /**
      * Get the fields displayed by the resource.
@@ -49,6 +50,8 @@ class City extends Resource
             Text::make('Name','name')->sortable(),
 
             BelongsTo::make('Government')->sortable(),
+
+            HasMany::make('Areas')->sortable(),
         ];
     }
 
