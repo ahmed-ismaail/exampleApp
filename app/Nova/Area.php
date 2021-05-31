@@ -33,7 +33,7 @@ class Area extends Resource
         'id',
     ];
 
-    public static $with = ['City'];
+    public static $with = ['city'];
 
 
     /**

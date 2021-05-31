@@ -34,7 +34,7 @@ class Address extends Resource
         'id',
     ];
 
-    public static $with = ['User', 'Area'];
+    public static $with = ['user', 'area'];
 
     /**
      * Get the fields displayed by the resource.

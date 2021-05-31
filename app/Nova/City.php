@@ -33,7 +33,7 @@ class City extends Resource
         'id',
     ];
 
-    public static $with = ['Government'];
+    public static $with = ['government'];
 
     /**
      * Get the fields displayed by the resource.
