@@ -18,15 +18,15 @@
 </template>
 
 <script>
-import store from "./store/index.js";
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "App",
   methods: {
     switchComponents() {
-      store.commit("switchComponents");
+      this.switchComponents();
     },
+    ...mapMutations(["switchComponents"]),
   },
   computed: {
     ...mapState(["switchToUser"]),
