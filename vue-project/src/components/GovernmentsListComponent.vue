@@ -1,7 +1,7 @@
 <template>
   <div id="governmentList">
     <div v-if="governmentList != null">
-      <select v-model="key" @change="onSelectChange">
+      <select @change="onSelectChange">
         <option disabled value="" selected="selected">Please select one</option>
         <option
           v-for="governemnt in governmentList"
@@ -19,95 +19,54 @@
       />
     </div>
     <div id="governmentListAlers">
-      <success-component v-if="succeeded" :content="successMessage" />
-      <fail-component v-if="failed" :content="errorMessage" />
+      <success-component v-if="succeededDelete" :content="successMessage" />
+      <fail-component v-if="failedDelete" :content="errorMessage" />
     </div>
   </div>
 </template> 
 
 <script>
-import axios from "axios";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "GovernmentsListComponent",
-  props: {
-    callUpdateList: {
-      type: Boolean,
-      default: false,
-    },
-    callHideAlerts: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      governmentList: [],
-      key: "",
-      governmentId: "",
-      isHidden: true,
-      failed: false,
-      succeeded: false,
-      errorMessage: "",
-      successMessage: "",
-    };
-  },
   methods: {
     retrieveGovernmentsList() {
-      axios
-        .get(process.env.VUE_APP_RETRIEVE_GOVERNMENTS_LIST_URL)
-        .then((list) => {
-          this.governmentList = list.data;
-        })
-        .catch(() => {
-          console.log("error loading");
-        });
-    },
-    onSelectChange() {
-      this.$emit("hideInputAlerts");
-      this.governmentId = this.key;
-      this.isHidden = false;
-      this.failed = false;
-      this.succeeded = false;
-    },
-    deleteGovernment() {
-      this.removeAlerts();
-      if (this.governmentId != null) {
-        axios
-          .post(process.env.VUE_APP_DELETE_GOVERNMENT_URL, {
-            id: this.governmentId,
-          })
-          .then((response) => {
-            this.succeeded = true;
-            this.successMessage = response.data.message;
-            this.governmentId = null;
-            this.$emit("updateCountAfterDelete");
-            this.retrieveGovernmentsList();
-          })
-          .catch((e) => {
-            this.failed = true;
-            this.errorMessage = e.response.data.message;
-          });
-      }else{
-        this.failed = true;
-        this.errorMessage = "you have to select a government"
-      }
-    },
-    removeAlerts() {
-      this.failed = false;
-      this.succeeded = false;
-    },
-  },
-  watch: {
-    callUpdateList() {
       this.retrieveGovernmentsList();
     },
-    callHideAlerts() {
+    onSelectChange(e) {
+      this.setGovernmentId(e.target.value);
+      this.setHidden();
       this.removeAlerts();
     },
+    deleteGovernment() {
+      this.deleteGovernment();
+    },
+    removeAlerts() {
+      this.clearAlerts();
+      this.removeDeleteAlerts();
+    },
+    ...mapMutations([
+      "setGovernmentId",
+      "setHidden",
+      "clearAlerts",
+      "removeDeleteAlerts",
+    ]),
+    ...mapActions(["retrieveGovernmentsList", "deleteGovernment"]),
   },
   mounted: function () {
     this.retrieveGovernmentsList();
+  },
+  computed: {
+    ...mapState([
+      "governmentList",
+      "governmentId",
+      "isHidden",
+      "failedDelete",
+      "succeededDelete",
+      "errorMessage",
+      "successMessage",
+    ]),
   },
 };
 </script>

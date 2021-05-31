@@ -10,6 +10,7 @@ import FailComponent from "./components/FailComponent.vue"
 import GovernmentsCountComponent from "./components/GovernmentsCountComponent.vue"
 import GovernmentsListComponent from "./components/GovernmentsListComponent.vue"
 import AddUser from "./components/AddUser.vue"
+import store from "./store/index.js"
 
 const app = createApp(App)
 
@@ -23,5 +24,6 @@ app.component('fail-component', FailComponent)
 app.component('governments-count-component', GovernmentsCountComponent)
 app.component('governments-list-component', GovernmentsListComponent)
 app.component('add-user-component', AddUser)
+app.use(store)
 
 app.mount('#app')

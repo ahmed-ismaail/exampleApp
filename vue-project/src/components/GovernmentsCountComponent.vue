@@ -5,40 +5,21 @@
 </template> 
 
 <script>
-import axios from "axios";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "GovernmentsCountComponent",
-  data() {
-    return {
-      governmentCount: 0,
-    };
-  },
-  props: {
-    callUpdateCount: {
-      type: Boolean,
-      default: false,
-    },
-  },
   methods: {
-    retrieveGovernmentsCount() {
-      axios
-        .get(process.env.VUE_APP_RETRIEVE_GOVERNMENTS_COUNT_URL)
-        .then((count) => {
-          this.governmentCount = count.data;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    },
-  },
-  watch: {
-    callUpdateCount() {
+    getCount() {
       this.retrieveGovernmentsCount();
     },
+    ...mapActions(["retrieveGovernmentsCount"]),
   },
   mounted: function () {
-    this.retrieveGovernmentsCount();
+    this.getCount();
+  },
+  computed: {
+    ...mapState(["governmentCount"]),
   },
 };
 </script>

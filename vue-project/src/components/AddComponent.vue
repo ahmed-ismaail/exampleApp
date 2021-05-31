@@ -4,15 +4,15 @@
     <custom-input
       placeHolderText="Enter government name..."
       inputType="text"
-      v-on:get-input="getGovernmentName"
-      ref="input"
-      @writing="removeMessage(); hideListAlertsEmit();"
+      v-on:get-input="setGovernmentName"
+      :clearInput="inputsEmpty"
+      @writing="removeAlerts()"
       :isDisabled="inputDisabled"
     />
     <custom-button
       btnValue="Add"
       class="addButton"
-      @methodAdd="addItem"
+      @methodAdd="addGovernment"
       :isButtonDisabled="buttonDisabled"
     />
     <loading-component v-if="isLoading" />
@@ -22,83 +22,36 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "AddComponent",
-  props: {
-    callHideAlerts: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      governmentName: "",
-      isLoading: false,
-      succeeded: false,
-      failed: false,
-      inputDisabled: false,
-      buttonDisabled: false,
-      errorMessage: "",
-      successMessage: "",
-    };
-  },
   methods: {
-    getGovernmentName(value) {
-      this.governmentName = value;
+    setGovernmentName(value) {
+      this.setGovernmentName(value);
     },
-    addItem() {
-      this.isLoading = true;
-      this.removeMessage();
-      this.buttonDisabled = true;
-      this.inputDisabled = true;
-      if (this.governmentName != "") {
-        axios
-          .post(process.env.VUE_APP_ADD_GOVERNMENT_URL, {
-            name: this.governmentName,
-          })
-          .then((response) => {
-            this.isLoading = false;
-            this.succeeded = true;
-            this.successMessage = response.data.message;
-            this.governmentName = "";
-            this.$refs.input.inputText = "";
-            this.enableform();
-            this.updateGovernmentsCount();
-          })
-          .catch((e) => {
-            this.isLoading = false;
-            this.failed = true;
-            this.errorMessage = e.response.data;
-            this.enableform();
-          });
-      } else {
-        this.isLoading = false;
-        this.failed = true;
-        this.errorMessage = "Can't leave input empty";
-        this.enableform();
-      }
+    addGovernment() {
+      this.addGovernment();
     },
-    enableform() {
-      this.buttonDisabled = false;
-      this.inputDisabled = false;
+    removeAlerts() {
+      this.removeDeleteAlerts();
+      this.clearAlerts();
     },
-    removeMessage() {
-      this.failed = false;
-      this.succeeded = false;
-    },
-    hideListAlertsEmit() {
-      this.$emit("hideListAlerts");
-    },
-    updateGovernmentsCount() {
-      this.$emit("updateCount");
-    },
+    ...mapActions(["addGovernment"]),
+    ...mapMutations(["setGovernmentName", "removeDeleteAlerts", "clearAlerts"]),
   },
-  watch: {
-    callHideAlerts() {
-      this.removeMessage();
-    },
+  computed: {
+    ...mapState([
+      "governmentName",
+      "succeeded",
+      "inputDisabled",
+      "buttonDisabled",
+      "failed",
+      "succeeded",
+      "errorMessage",
+      "successMessage",
+      "inputsEmpty",
+    ]),
   },
 };
 </script>
