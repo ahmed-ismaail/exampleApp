@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Area extends Resource
@@ -41,6 +42,10 @@ class Area extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+
+            Text::make('Name')->sortable(),
+
+            ID::make(__('City_Id'), 'city_id')->sortable(),
         ];
     }
 
