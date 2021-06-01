@@ -57,7 +57,11 @@ class Address extends Resource
 
             BelongsTo::make('User')->sortable(),
 
+            Text::make('User_Id', 'user_id')->sortable(),
+
             BelongsTo::make('Area')->sortable(),
+
+            Text::make('Area_Id', 'area_id')->sortable(),
         ];
     }
 

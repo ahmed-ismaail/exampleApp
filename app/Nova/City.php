@@ -51,6 +51,8 @@ class City extends Resource
 
             BelongsTo::make('Government')->sortable(),
 
+            Text::make('Government_Id', 'government_id')->sortable(),
+
             HasMany::make('Areas')->sortable(),
         ];
     }
