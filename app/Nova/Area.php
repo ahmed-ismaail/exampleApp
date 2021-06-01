@@ -52,7 +52,7 @@ class Area extends Resource
 
             BelongsTo::make('City')->sortable(),
 
-            ID::make(__('City_Id'), 'city_id')->sortable(),
+            Text::make('City_Id', 'city_id')->sortable(),
 
             HasMany::make('Addresses')->sortable(),
         ];
