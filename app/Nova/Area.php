@@ -7,7 +7,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Area extends Resource
 {
@@ -47,13 +47,13 @@ class Area extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            
+
             Text::make('Name', 'name')->sortable(),
-            
+
             BelongsTo::make('City')->sortable(),
 
             ID::make(__('City_Id'), 'city_id')->sortable(),
-            
+
             HasMany::make('Addresses')->sortable(),
         ];
     }
@@ -93,7 +93,7 @@ class Area extends Resource
         return [];
     }
 
-    /**
+    /** 
      * Get the actions available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -101,6 +101,8 @@ class Area extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new DownloadExcel(),
+        ];
     }
 }
