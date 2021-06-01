@@ -3,10 +3,10 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Government extends Resource
 {
@@ -46,8 +46,10 @@ class Government extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-             
+
             Text::make('Name', 'name')->sortable(),
+
+            Date::make('Created At', 'created_at')->sortable(),
 
             HasMany::make('Cities')->sortable()
         ];
@@ -72,7 +74,10 @@ class Government extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\FromDate,
+            new Filters\ToDate,
+        ];
     }
 
     /**
