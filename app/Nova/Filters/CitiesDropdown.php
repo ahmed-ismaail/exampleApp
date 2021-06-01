@@ -36,6 +36,6 @@ class CitiesDropdown extends Filter
      */
     public function options(Request $request)
     {
-        return City::pluck('id','id');
+        return City::pluck('id','name');
     }
 }
