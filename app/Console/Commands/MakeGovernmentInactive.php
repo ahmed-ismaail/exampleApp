@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Jobs\MakeUnattachedGovernmentsInActive;
 use Illuminate\Console\Command;
 
-class makeGovernmentInactive extends Command
+class MakeGovernmentInactive extends Command
 {
     /**
      * The name and signature of the console command.
@@ -38,6 +38,6 @@ class makeGovernmentInactive extends Command
      */
     public function handle()
     {
-        return new MakeUnattachedGovernmentsInActive;
+        MakeUnattachedGovernmentsInActive::dispatch();
     }
 }

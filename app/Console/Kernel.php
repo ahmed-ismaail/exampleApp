@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(makeGovernmentInactive::class)->hourly();
+        $schedule->command('makeGovernmentInactive')->hourly();
     }
 
     /**
