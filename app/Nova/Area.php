@@ -47,11 +47,13 @@ class Area extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-
+            
             Text::make('Name', 'name')->sortable(),
-
+            
             BelongsTo::make('City')->sortable(),
 
+            ID::make(__('City_Id'), 'city_id')->sortable(),
+            
             HasMany::make('Addresses')->sortable(),
         ];
     }
