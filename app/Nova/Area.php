@@ -51,7 +51,7 @@ class Area extends Resource
             Text::make('Name', 'name')->sortable(),
 
             BelongsTo::make('City')->sortable(),
-            
+
             HasMany::make('Addresses')->sortable(),
         ];
     }
@@ -75,7 +75,9 @@ class Area extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\CitiesDropdown,
+        ];
     }
 
     /**
