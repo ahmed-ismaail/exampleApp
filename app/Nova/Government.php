@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -48,6 +49,8 @@ class Government extends Resource
             ID::make(__('ID'), 'id')->sortable(),
 
             Text::make('Name', 'name')->sortable(),
+
+            Boolean::make('IsActive', 'IsActive')->sortable(),
 
             Date::make('Created At', 'created_at')->sortable(),
 
