@@ -15,7 +15,8 @@ class Government extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'IsActive'
     ];
 
     public function cities()

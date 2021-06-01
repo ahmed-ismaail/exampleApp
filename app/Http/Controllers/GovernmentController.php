@@ -49,7 +49,7 @@ class GovernmentController extends Controller
     public function retrieveGovernmentsList()
     {
         try {
-            $governmentsList = Government::where('IsActive','=',true)->get();
+            $governmentsList = Government::where('IsActive', '=', true)->get();
             return response()->json($governmentsList, 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
@@ -82,6 +82,22 @@ class GovernmentController extends Controller
             }
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function updateUnattachedGovernmentsToInActive()
+    {
+        try {
+            Government::join('cities', 'cities.government_id', '<>', 'governments.id')
+                ->update(['IsActive' => false]);
+
+            return response()->json([
+                "message" => "governments updated successfully"
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                "message" => $e->getMessage()
+            ], 500);
         }
     }
 }

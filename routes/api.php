@@ -35,3 +35,5 @@ Route::get('getGovernmentsCount', [GovernmentController::class, 'retrieveGovernm
 Route::get('getGovernmentsList', [GovernmentController::class, 'retrieveGovernmentsList']);
 
 Route::post('deleteGovernment', [GovernmentController::class, 'deleteGovernment']);
+
+Route::post('makeGovernmentsInactive', [GovernmentController::class, 'updateUnattachedGovernmentsToInActive']);

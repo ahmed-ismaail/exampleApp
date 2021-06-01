@@ -2,9 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Models\Government;
+use App\Http\Controllers\GovernmentController;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -31,12 +30,7 @@ class MakeUnattachedGovernmentsInActive implements ShouldQueue
      */
     public function handle()
     {
-        $governments = Government::get();
-        foreach ($governments as $government) {
-            if ($government->cities()->count() < 1) {
-                $government->IsActive = false;
-                $government->save();
-            }
-        }
+        $governmentController = new GovernmentController();
+        $governmentController->updateUnattachedGovernmentsToInActive();
     }
 }

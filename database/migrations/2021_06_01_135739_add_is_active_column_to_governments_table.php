@@ -14,7 +14,7 @@ class AddIsActiveColumnToGovernmentsTable extends Migration
     public function up()
     {
         Schema::table('governments', function (Blueprint $table) {
-            $table->boolean('IsActive');
+            $table->boolean('IsActive')->default(0);
         });
     }
 
