@@ -49,7 +49,7 @@ class GovernmentController extends Controller
     public function retrieveGovernmentsList()
     {
         try {
-            $governmentsList = Government::get();
+            $governmentsList = Government::where('IsActive','=',true)->get();
             return response()->json($governmentsList, 200);
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
