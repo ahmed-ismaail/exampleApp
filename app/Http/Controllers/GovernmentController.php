@@ -88,8 +88,7 @@ class GovernmentController extends Controller
     public function updateUnattachedGovernmentsToInActive()
     {
         try {
-            Government::join('cities', 'cities.government_id', '<>', 'governments.id')
-                ->update(['IsActive' => false]);
+            Government::doesntHave('cities')->update(['IsActive' => false]);
 
             return response()->json([
                 "message" => "governments updated successfully"
