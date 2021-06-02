@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\InsertInactiveGovernments;
 use App\Models\Government;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -88,11 +89,14 @@ class GovernmentController extends Controller
     public function updateUnattachedGovernmentsToInActive()
     {
         try {
-            Government::doesntHave('cities')->update(['IsActive' => false]);
+            $governmentsList = Government::doesntHave('cities')
+                ->where("IsActive", true)
+                ->select("id as government_id")
+                ->get();
+            Government::doesntHave('cities')
+                ->update(['IsActive' => false]);
 
-            return response()->json([
-                "message" => "governments updated successfully"
-            ], 200);
+            return $governmentsList;
         } catch (Exception $e) {
             return response()->json([
                 "message" => $e->getMessage()

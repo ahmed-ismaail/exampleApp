@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Address;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\GovernmentController;
+use App\Http\Controllers\InactiveGovernmentsController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -28,7 +28,7 @@ Route::post('addresses', [AddressController::class, 'createAddress']);
 
 Route::get('getUseraddresses', [AddressController::class, 'retrieveUserAddresses']);
 
-Route::post('addGovernment',[GovernmentController::class, "addGovernment"]);
+Route::post('addGovernment', [GovernmentController::class, "addGovernment"]);
 
 Route::get('getGovernmentsCount', [GovernmentController::class, 'retrieveGovernments']);
 
@@ -37,3 +37,7 @@ Route::get('getGovernmentsList', [GovernmentController::class, 'retrieveGovernme
 Route::post('deleteGovernment', [GovernmentController::class, 'deleteGovernment']);
 
 Route::post('makeGovernmentsInactive', [GovernmentController::class, 'updateUnattachedGovernmentsToInActive']);
+
+Route::post('addInactiveGovernment', [InactiveGovernmentsController::class, 'addInactiveGovernment']);
+
+Route::get('getGovernmentsId', [GovernmentController::class, 'retrieveGovernmentsId']);

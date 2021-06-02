@@ -2,25 +2,27 @@
 
 namespace App\Jobs;
 
-use App\Http\Controllers\GovernmentController;
+use App\Http\Controllers\InactiveGovernmentsController;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class MakeUnattachedGovernmentsInActive implements ShouldQueue
+class InsertInactiveGovernments implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $changedGovernments;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($changes)
     {
-        //
+        $this->changedGovernments = $changes;
     }
 
     /**
@@ -30,8 +32,7 @@ class MakeUnattachedGovernmentsInActive implements ShouldQueue
      */
     public function handle()
     {
-        $governmentController = new GovernmentController();
-        $changedGovernments = $governmentController->updateUnattachedGovernmentsToInActive();
-        InsertInactiveGovernments::dispatch(["governments" => $changedGovernments]); 
+        $inactiveGovernmentsController = new InactiveGovernmentsController();
+        $inactiveGovernmentsController->addInactiveGovernment($this->changedGovernments);
     }
 }

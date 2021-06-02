@@ -15,6 +15,7 @@ class InactiveGovernments extends Model
      * @var array
      */
     protected $fillable = [
+        'government_id'
     ];
 
     public function government()

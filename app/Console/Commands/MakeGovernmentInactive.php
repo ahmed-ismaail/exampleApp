@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\InsertInactiveGovernments;
 use App\Jobs\MakeUnattachedGovernmentsInActive;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Bus;
 
 class MakeGovernmentInactive extends Command
 {
