@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class AddIsActiveColumnToGovernmentsTable extends Migration
-{ 
+{
     /**
      * Run the migrations.
      *
@@ -26,7 +26,7 @@ class AddIsActiveColumnToGovernmentsTable extends Migration
     public function down()
     {
         Schema::table('governments', function (Blueprint $table) {
-            //
+            $table->dropColumn('IsActive');
         });
     }
 }
