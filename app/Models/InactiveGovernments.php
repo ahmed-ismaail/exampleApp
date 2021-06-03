@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Government extends Model
+class InactiveGovernments extends Model
 {
     use HasFactory;
 
@@ -15,17 +15,11 @@ class Government extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'IsActive'
+        'government_id'
     ];
 
-    public function cities()
+    public function government()
     {
-        return $this->hasMany(City::class);
-    }  
-    
-    public function inactiveGovernments()
-    {
-        return $this->hasMany(InactiveGovernments::class);
-    } 
+        return $this->belongsTo(Government::class);
+    }
 }

@@ -3,27 +3,26 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 
-class Government extends Resource
+class InactiveGovernments extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Government::class;
+    public static $model = \App\Models\InactiveGovernments::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,7 +33,7 @@ class Government extends Resource
         'id',
     ];
 
-    public static $with = ['cities'];
+    public static $with = ['government'];
 
 
     /**
@@ -48,13 +47,11 @@ class Government extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            Text::make('Name', 'name')->sortable(),
-
-            Boolean::make('IsActive', 'IsActive')->sortable(),
-
             Date::make('Created At', 'created_at')->sortable(),
 
-            HasMany::make('Cities')->sortable()
+            BelongsTo::make('Government')->sortable(),
+
+            Text::make('Government_Id', 'government_id')->sortable(),
         ];
     }
 
