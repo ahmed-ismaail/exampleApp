@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0b97d46b06e3d39b50fdaf720e04b1f",
+    "content-hash": "884c0f61c64147316d41b3a66b28f604",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2761,6 +2761,42 @@
                 "php"
             ],
             "time": "2021-05-03T19:11:20+00:00"
+        },
+        {
+            "name": "nova/government-management",
+            "version": "dev-ActiveGovernments",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/GovernmentManagement",
+                "reference": "168f39df306d20f194fa28595f284990cdccee6d"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nova\\GovernmentManagement\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nova\\GovernmentManagement\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "opis/closure",

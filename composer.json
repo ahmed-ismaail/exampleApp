@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
@@ -13,7 +16,8 @@
         "laravel/horizon": "^5.7",
         "laravel/nova": "*",
         "laravel/tinker": "^2.5",
-        "maatwebsite/laravel-nova-excel": "^1.2"
+        "maatwebsite/laravel-nova-excel": "^1.2",
+        "nova/government-management": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -66,6 +70,10 @@
         {
             "type": "path",
             "url": "./nova"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/GovernmentManagement"
         }
     ]
 }
