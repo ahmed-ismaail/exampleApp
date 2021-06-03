@@ -30,7 +30,8 @@ const store = createStore({
         succeededDelete: false,
         switchToUser: false,
         failedAddUser: false,
-        succeededAddUser: false
+        succeededAddUser: false,
+        novaGovernmentsList: [],
     },
     getters: {
         getGovernmentCount(state) {
@@ -144,6 +145,9 @@ const store = createStore({
         },
         isSucceededAddUser(state) {
             state.succeededAddUser = true;
+        },
+        setGovernmentsList(state, payload) {
+            state.novaGovernmentsList = payload;
         }
     }, actions: {
         addUser({ commit }) {
@@ -265,7 +269,17 @@ const store = createStore({
                 commit("isFailedDelete");
                 commit("showError", "you have to select a government");
             }
-        }
+        },
+        getGovernments({ commit }) {
+            axios
+                .get("http://127.0.0.1/nova-api/governments")
+                .then((list) => {
+                    commit("setGovernmentsList", helper.customizeObject(list.data.resources));
+                })
+                .catch(() => {
+                    console.log("error loading");
+                });
+        },
     }
 })
 
