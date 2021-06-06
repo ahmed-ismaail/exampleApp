@@ -14,11 +14,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="g in novaGovernmentsList" :key="g.id">
-          <td>{{ g.id }}</td>
-          <td>{{ g.name }}</td>
-          <td>{{ g.is_active }}</td>
-          <td>{{ g.created_at }}</td>
+        <tr v-for="government in novaGovernmentsList" :key="government.id">
+          <td>{{ government.id }}</td>
+          <td>{{ government.name }}</td>
+          <td>{{ government.IsActive }}</td>
+          <td>{{ government.created_at }}</td>
         </tr>
       </tbody>
     </table>
@@ -40,18 +40,16 @@ export default {
     customizeObject(list) {
       let governmentsList = [];
       list.forEach((element) => {
-        governmentsList.push({
-          id: element["fields"][0]["value"],
-          name: element["fields"][1]["value"],
-          is_active: element["fields"][2]["value"],
-          created_at: element["fields"][3]["value"],
+        let temp = {};
+        element["fields"].forEach((field) => {
+          _.extend(temp, { [field["attribute"]]: field["value"] });
         });
+        governmentsList.push(temp);
       });
-      // console.log(governmentsList);
       return governmentsList;
     },
     getGovernments() {
-      axios
+      Nova.request()
         .get("http://127.0.0.1/nova-api/governments")
         .then((list) => {
           this.novaGovernmentsList = this.customizeObject(list.data.resources);

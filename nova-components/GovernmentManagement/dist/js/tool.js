@@ -1149,6 +1149,8 @@ module.exports = function normalizeComponent (
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1192,21 +1194,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     customizeObject: function customizeObject(list) {
       var governmentsList = [];
       list.forEach(function (element) {
-        governmentsList.push({
-          id: element["fields"][0]["value"],
-          name: element["fields"][1]["value"],
-          is_active: element["fields"][2]["value"],
-          created_at: element["fields"][3]["value"]
+        var temp = {};
+        element["fields"].forEach(function (field) {
+          _.extend(temp, _defineProperty({}, field["attribute"], field["value"]));
         });
+        governmentsList.push(temp);
       });
-      // console.log(governmentsList);
+      //console.log(governmentsList);
       return governmentsList;
     },
     getGovernments: function getGovernments() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("http://127.0.0.1/nova-api/governments").then(function (list) {
+      Nova.request()
+      //.get("http://127.0.0.1/nova-api/addresses")
+      .get("http://127.0.0.1/nova-api/governments").then(function (list) {
         _this.novaGovernmentsList = _this.customizeObject(list.data.resources);
+        console.log(_this.novaGovernmentsList);
       }).catch(function () {
         console.log("error loading");
       });
@@ -2252,15 +2256,15 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.novaGovernmentsList, function(g) {
-          return _c("tr", { key: g.id }, [
-            _c("td", [_vm._v(_vm._s(g.id))]),
+        _vm._l(_vm.novaGovernmentsList, function(government) {
+          return _c("tr", { key: government.id }, [
+            _c("td", [_vm._v(_vm._s(government.id))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(g.name))]),
+            _c("td", [_vm._v(_vm._s(government.name))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(g.is_active))]),
+            _c("td", [_vm._v(_vm._s(government.IsActive))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(g.created_at))])
+            _c("td", [_vm._v(_vm._s(government.created_at))])
           ])
         }),
         0
