@@ -124,7 +124,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var disposed = false
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(6)
 /* template */
 var __vue_template__ = __webpack_require__(9)
 /* template functional */
@@ -274,7 +274,41 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 6 */,
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(7);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: _extends({
+    getGovernments: function getGovernments() {
+      this.getGovernmentFromStore();
+    }
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* mapActions */])("nova-store/governments-table-module", ["getGovernmentFromStore"])),
+  mounted: function mounted() {
+    this.getGovernments();
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])("nova-store/governments-table-module", ["novaGovernmentsList"]))
+});
+
+/***/ }),
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1579,7 +1613,7 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("table-component")
+      _c("table-component", { attrs: { list: _vm.novaGovernmentsList } })
     ],
     1
   )
@@ -1657,9 +1691,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(7);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 //
 //
 //
@@ -1683,20 +1714,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: _extends({
-    getGovernments: function getGovernments() {
-      this.getGovernmentFromStore();
-    }
-  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* mapActions */])("nova-store/module", ["getGovernmentFromStore"])),
-  mounted: function mounted() {
-    this.getGovernments();
-  },
-
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])("nova-store/module", ["novaGovernmentsList"]))
+  props: {
+    list: Array
+  }
 });
 
 /***/ }),
@@ -1713,7 +1736,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.novaGovernmentsList, function(government) {
+        _vm._l(_vm.list, function(government) {
           return _c("tr", { key: government.id }, [
             _c("td", [_vm._v(_vm._s(government.id))]),
             _vm._v(" "),

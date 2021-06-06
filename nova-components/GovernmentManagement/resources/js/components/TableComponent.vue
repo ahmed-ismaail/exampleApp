@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="government in novaGovernmentsList" :key="government.id">
+        <tr v-for="government in list" :key="government.id">
           <td>{{ government.id }}</td>
           <td>{{ government.name }}</td>
           <td>{{ government.IsActive }}</td>
@@ -22,20 +22,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
 
 export default {
-  methods: {
-    getGovernments() {
-      this.getGovernmentFromStore();
-    },
-    ...mapActions("nova-store/module",["getGovernmentFromStore"]),
-  },
-  mounted() {
-    this.getGovernments();
-  },
-  computed: {
-    ...mapState("nova-store/module",["novaGovernmentsList"]),
+  props:{
+    list:Array
   },
 };
 </script>
