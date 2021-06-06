@@ -1,3 +1,5 @@
+import StoreModule from "../store/store-module"
+
 Nova.booting((Vue, router, store) => {
   router.addRoutes([
     {
@@ -6,4 +8,7 @@ Nova.booting((Vue, router, store) => {
       component: require('./components/Tool'),
     },
   ])
+
+  store.registerModule("nova-store/module", StoreModule)
+
 })

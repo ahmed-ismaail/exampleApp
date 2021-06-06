@@ -26,47 +26,20 @@
 </template>
 
 <script>
-import axios from "axios";
-// import helper from "./../../../../../vue-project/src/helperClass";
-//import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
-  data() {
-    return {
-      novaGovernmentsList: [],
-    };
-  },
   methods: {
-    customizeObject(list) {
-      let governmentsList = [];
-      list.forEach((element) => {
-        let temp = {};
-        element["fields"].forEach((field) => {
-          _.extend(temp, { [field["attribute"]]: field["value"] });
-        });
-        governmentsList.push(temp);
-      });
-      return governmentsList;
-    },
     getGovernments() {
-      Nova.request()
-        .get("http://127.0.0.1/nova-api/governments")
-        .then((list) => {
-          this.novaGovernmentsList = this.customizeObject(list.data.resources);
-        })
-        .catch(() => {
-          console.log("error loading");
-        });
+      this.getGovernmentFromStore();
     },
-    //...mapActions(["getGovernments"]),
+    ...mapActions("nova-store/module",["getGovernmentFromStore"]),
   },
   mounted() {
     this.getGovernments();
   },
-  // computed: {
-  // ...mapState([
-  // "novaGovernmentsList",
-  // ]),
-  // },
+  computed: {
+    ...mapState("nova-store/module",["novaGovernmentsList"]),
+  },
 };
 </script>
