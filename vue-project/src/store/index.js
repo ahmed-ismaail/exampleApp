@@ -21,7 +21,6 @@ const store = createStore({
         email: "",
         password: "",
         governmentCount: 0,
-        //listCompnent
         governmentList: [],
         key: "",
         governmentId: "",
@@ -30,7 +29,7 @@ const store = createStore({
         succeededDelete: false,
         switchToUser: false,
         failedAddUser: false,
-        succeededAddUser: false
+        succeededAddUser: false,
     },
     getters: {
         getGovernmentCount(state) {
